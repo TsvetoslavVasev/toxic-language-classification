@@ -1,0 +1,263 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#"
+     xml:base="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:modified-toxic-ontology="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#">
+    <owl:Ontology rdf:about="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#contains -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#contains">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#Context"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#Content"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#hasDefinition -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#hasDefinition">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#Content"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#Definition"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#definition -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#definition">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#Definition"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#description -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#description">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#Context"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#text -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#text">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#Content"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#Content -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#Content"/>
+    
+
+
+    <!-- http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#Context -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#Context"/>
+    
+
+
+    <!-- http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#Definition -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#Definition"/>
+    
+
+
+    <!-- http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#MedicalTerminology -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#MedicalTerminology">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#Content"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#MedicalTerminologyDefinition -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#MedicalTerminologyDefinition">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#Definition"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#MinorityGroup -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#MinorityGroup">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#Content"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#MinorityGroupDefinition -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#MinorityGroupDefinition">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#Definition"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#NonToxicLanguage -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#NonToxicLanguage">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#Content"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#NonToxicLanguageDefinition -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#NonToxicLanguageDefinition">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#Definition"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#ToxicLanguage -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#ToxicLanguage">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#Content"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#ToxicLanguageDefinition -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#ToxicLanguageDefinition">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#Definition"/>
+    </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#AllLanguage -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#AllLanguage">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#Context"/>
+        <description>COntext containing all content</description>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#Ambiguous -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#Ambiguous">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#Context"/>
+        <description>Language containing content that is of both toxic non toxic type</description>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#FamilyFriendly -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#FamilyFriendly">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#Context"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#Forum -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#Forum">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#Context"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#MedicalTerminologyDefinition -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#MedicalTerminologyDefinition">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#MedicalTerminologyDefinition"/>
+        <definition>MedicalDefintion</definition>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#MinorityGroupDefinition -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#MinorityGroupDefinition">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#MinorityGroupDefinition"/>
+        <definition>minorityDefinition</definition>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#NonToxicLanguageDefinition -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#NonToxicLanguageDefinition">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#NonToxicLanguageDefinition"/>
+        <definition>nonToxicDefintion</definition>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#Official -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#Official">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#Context"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#ToxicLanguageDefinition -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#ToxicLanguageDefinition">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#ToxicLanguageDefinition"/>
+        <definition>ToxicDefinition</definition>
+    </owl:NamedIndividual>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
+
