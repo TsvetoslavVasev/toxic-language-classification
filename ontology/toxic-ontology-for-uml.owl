@@ -89,7 +89,14 @@
 
     <!-- http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#Content -->
 
-    <owl:Class rdf:about="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#Content"/>
+    <owl:Class rdf:about="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#Content">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#hasDefinition"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#Definition"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
     
 
 
@@ -184,7 +191,7 @@
 
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#AllLanguage">
         <rdf:type rdf:resource="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#Context"/>
-        <description>COntext containing all content</description>
+        <description>Context containing all types of content</description>
     </owl:NamedIndividual>
     
 
@@ -193,7 +200,7 @@
 
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#Ambiguous">
         <rdf:type rdf:resource="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#Context"/>
-        <description>Language containing content that is of both toxic non toxic type</description>
+        <description>Context containing content that is of both toxic non toxic type</description>
     </owl:NamedIndividual>
     
 
@@ -202,6 +209,7 @@
 
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#FamilyFriendly">
         <rdf:type rdf:resource="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#Context"/>
+        <description>Filters out all toxic content, including abiguous content</description>
     </owl:NamedIndividual>
     
 
@@ -210,6 +218,7 @@
 
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#Forum">
         <rdf:type rdf:resource="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#Context"/>
+        <description>Filters out toxic content except for the times it is an instance of medical terminology, non toxic, minority group as well</description>
     </owl:NamedIndividual>
     
 
@@ -245,6 +254,7 @@
 
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#Official">
         <rdf:type rdf:resource="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#Context"/>
+        <description>Fitlers out all toxic language and medical terminology except for the cases when the toxic language has a non toxic or minority group meaning</description>
     </owl:NamedIndividual>
     
 
