@@ -1,0 +1,8 @@
+saved_model_5epochs/spiece.model filter=lfs diff=lfs merge=lfs -text
+saved_model_5epochs/model.safetensors filter=lfs diff=lfs merge=lfs -text
+saved_model_5epochs filter=lfs diff=lfs merge=lfs -text
+saved_model_5epochs/config.json filter=lfs diff=lfs merge=lfs -text
+saved_model_5epochs/special_tokens_map.json filter=lfs diff=lfs merge=lfs -text
+saved_model_5epochs/tokenizer.json filter=lfs diff=lfs merge=lfs -text
+saved_model_5epochs/tokenizer_config.json filter=lfs diff=lfs merge=lfs -text
+saved_model_5epochs/added_tokens.json filter=lfs diff=lfs merge=lfs -text

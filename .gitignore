@@ -1,3 +1,4 @@
 .DS_Store
-saved_model_5epochs/*
+
 ontology/old-toxic-language-ontology-with-individuals.owl
+code/train_model.ipynb
