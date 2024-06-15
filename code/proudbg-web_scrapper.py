@@ -82,5 +82,5 @@ df = pd.DataFrame({
     'sentence_length': [len(sentence) for sentence in all_sentences]
 })
 
-df.to_csv('../data/proud_bg_sentences.csv', index=False)
+df.to_csv('../data/scraped_datasets/proud_bg_sentences2.csv', index=False)
 print("CSV file has been created with the collected sentences.")

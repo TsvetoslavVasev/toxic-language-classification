@@ -85,5 +85,5 @@ df = pd.DataFrame({
     'sentence_length': [len(sentence) for sentence in collected_sentences]
 })
 
-df.to_csv('../data/framar_forum_sentences.csv', index=False)
+df.to_csv('../data/scraped_datasets/framar_forum_sentences.csv', index=False)
 print("CSV file has been created with the collected sentences.")
