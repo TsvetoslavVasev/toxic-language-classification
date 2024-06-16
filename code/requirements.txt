@@ -12,3 +12,4 @@ rdflib
 nltk
 ollama
 torch
+argparse
