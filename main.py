@@ -18,7 +18,7 @@ g.parse(ontology_path, format="xml")
 namespace = Namespace("http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#")
 g.bind("onto", namespace)
 
-save_path = './saved_model_5epochs/'
+save_path = './trained_model/'
 model = AutoModelForSequenceClassification.from_pretrained(save_path)
 tokenizer = AutoTokenizer.from_pretrained(save_path)
 
