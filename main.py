@@ -1,9 +1,12 @@
-import argparse
+# import argparse
 from owlready2 import get_ontology
 from rdflib import Graph, Namespace
 import string
 import torch
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
+from flask import Flask, request, render_template
+
+app = Flask(__name__, template_folder='ui/templates', static_folder='ui/static')
 
 translator = str.maketrans('', '', string.punctuation)
 
@@ -14,6 +17,12 @@ g = Graph()
 g.parse(ontology_path, format="xml")
 namespace = Namespace("http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#")
 g.bind("onto", namespace)
+
+save_path = './saved_model_5epochs/'
+model = AutoModelForSequenceClassification.from_pretrained(save_path)
+tokenizer = AutoTokenizer.from_pretrained(save_path)
+
+labels_map = {0: 'Toxic', 1: 'MedicalTerminology', 2: 'NonToxic', 3: 'MinorityGroup'}
 
 def classify_ontology(text, ontology):
     words = text.split()
@@ -38,34 +47,28 @@ def classify_ontology(text, ontology):
         classifications['NonToxic'] = 1
     return classifications
 
-save_path = './saved_model_5epochs/'
-model = AutoModelForSequenceClassification.from_pretrained(save_path)
-tokenizer = AutoTokenizer.from_pretrained(save_path)
-
-label_map = {0: 'Toxic', 1: 'MedicalTerminology', 2: 'NonToxic', 3: 'MinorityGroup'}
-
 def predict(sentence):
     inputs = tokenizer(sentence, return_tensors='pt', padding=True, truncation=True, max_length=512)
-    inputs = {key: val.to(model.device) for key, val in inputs.items()}
+    inputs = {key: value.to(model.device) for key, value in inputs.items()}
     with torch.no_grad():
         outputs = model(**inputs)
     logits = outputs.logits
     predicted_label = torch.argmax(logits, dim=1).item()
-    return label_map[predicted_label]
+    return labels_map[predicted_label]
 
+@app.route('/')
+def home():
+    return render_template('index.html')
 
-def main():
-    parser = argparse.ArgumentParser(description="Classify sentences using ontology and ML model.")
-    parser.add_argument("sentence", type=str, help="Sentence to classify")
-    args = parser.parse_args()
-
-    sentence = args.sentence
-    ontology_classification = classify_ontology(sentence, onto)
-    model_classification = predict(sentence)
+@app.route('/classify', methods=['POST'])
+def classify():
+    text = request.form['text']
+    ontology_classification = classify_ontology(text, onto)
+    model_classification = predict(text)
     
-    print(f"Sentence: \"{sentence}\"")
-    print(f"Ontology predicted: {ontology_classification}")
-    print(f"Model predicted: {model_classification}")
+    filtered_ontology_classification = {key: value for key, value in ontology_classification.items() if value == 1}
+    
+    return render_template('result.html', text=text, ontology_classification=filtered_ontology_classification, model_classification=model_classification)
 
-if __name__ == "__main__":
-    main()
+if __name__ == '__main__':
+    app.run(port = 5678, debug=True)

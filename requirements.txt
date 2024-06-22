@@ -13,3 +13,4 @@ nltk
 ollama
 torch
 argparse
+flask

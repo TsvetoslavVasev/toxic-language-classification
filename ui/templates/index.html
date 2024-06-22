@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Text Classifier</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h1>Класификатор на токсичен език</h1>
+    <form action="/classify" method="post">
+      <textarea name="text" placeholder="Въведете текст тук..."></textarea><br>
+      <input type="submit" value="Класифицирай">
+    </form>
+  </div>
+</body>
+</html>

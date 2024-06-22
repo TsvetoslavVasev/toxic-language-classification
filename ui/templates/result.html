@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Classification Result</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h1>Въведен текст: "{{ text }}"</h1>
+    <h2>Класификации на базата на онтология:</h2>
+    <ul>
+      {% for classification, value in ontology_classification.items() %}
+        <li class="{% if classification == 'Toxic' %}toxic{% else %}nontoxic{% endif %}">{{ classification }}</li>
+      {% endfor %}
+    </ul>
+    <h2>Класификация от модел:</h2>
+    <p class="model-classification {% if model_classification == 'Toxic' %}toxic{% else %}nontoxic{% endif %}">{{ model_classification }}</p>
+    <a href="/">Класифицирай отново</a>
+  </div>
+</body>
+</html>
