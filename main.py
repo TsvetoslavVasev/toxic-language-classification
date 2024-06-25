@@ -1,4 +1,3 @@
-# import argparse
 from owlready2 import get_ontology
 from rdflib import Graph, Namespace
 import string
