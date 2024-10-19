@@ -1,0 +1,2561 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+         xmlns:owl="http://www.w3.org/2002/07/owl#"
+         xml:base="http://test.org/toxic-onto-bg.owl"
+         xmlns="http://test.org/toxic-onto-bg.owl#"
+         xmlns:modi="http://www.semanticweb.org/cvasev/ontologies/2024/4/modified-toxic-ontology#">
+
+<owl:Ontology rdf:about="http://test.org/toxic-onto-bg.owl"/>
+
+<owl:ObjectProperty rdf:about="#blocks">
+  <rdfs:domain rdf:resource="#Content"/>
+  <rdfs:range rdf:resource="#Context"/>
+  <rdfs:domain rdf:resource="#Context"/>
+  <rdfs:range rdf:resource="#Content"/>
+</owl:ObjectProperty>
+
+<owl:DatatypeProperty rdf:about="#definition">
+  <rdfs:domain rdf:resource="#Content"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+</owl:DatatypeProperty>
+
+<owl:Class rdf:about="#Context">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Content">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</owl:Class>
+
+<owl:Class rdf:about="#ToxicLanguage">
+  <rdfs:subClassOf rdf:resource="#Content"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#definition"/>
+      <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Toxic language is defined as rude, disrespectful, or unreasonable language that is likely to make someone leave a discussion.</owl:hasValue>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+</owl:Class>
+
+<owl:Class rdf:about="#MedicalTerminology">
+  <rdfs:subClassOf rdf:resource="#Content"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#definition"/>
+      <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Medical terminology is language that is used to describe anatomical structures, processes, conditions, medical procedures, and treatments.</owl:hasValue>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+</owl:Class>
+
+<owl:Class rdf:about="#MinorityGroup">
+  <rdfs:subClassOf rdf:resource="#Content"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#definition"/>
+      <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Minority group language refers to subgroups of the population with unique social, religious, ethnic, racial, and/or other characteristics that differ from those of a majority group.</owl:hasValue>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+</owl:Class>
+
+<owl:Class rdf:about="#NonToxicLanguage">
+  <rdfs:subClassOf rdf:resource="#Content"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#definition"/>
+      <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Non-toxic language refers to communication that is free from harmful, abusive or offensive content.</owl:hasValue>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+</owl:Class>
+
+<owl:Class rdf:about="#Ambiguous">
+  <rdfs:subClassOf rdf:resource="#Content"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#ToxicLanguage"/>
+        <rdf:Description rdf:about="#NonToxicLanguage"/>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ambiguous words are the ones that have at least one toxic and at least one non-toxic meaning.</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#FamilyFriendlyContentBlocked">
+  <rdfs:subClassOf rdf:resource="#Content"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <owl:Class>
+          <owl:unionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="#ToxicLanguage"/>
+            <rdf:Description rdf:about="#MedicalTerminology"/>
+            <rdf:Description rdf:about="#MinorityGroup"/>
+          </owl:unionOf>
+        </owl:Class>
+        <owl:Class>
+          <owl:complementOf rdf:resource="#NonToxicLanguage"/>
+        </owl:Class>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Words that would be blocked in family-friendly context.</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#ForumContentBlocked">
+  <rdfs:subClassOf rdf:resource="#Content"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#ToxicLanguage"/>
+        <owl:Class>
+          <owl:complementOf rdf:resource="#NonToxicLanguage"/>
+        </owl:Class>
+        <owl:Class>
+          <owl:complementOf rdf:resource="#MedicalTerminology"/>
+        </owl:Class>
+        <owl:Class>
+          <owl:complementOf rdf:resource="#MinorityGroup"/>
+        </owl:Class>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Words that would be blocked in forums.</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#FamilyFriendly">
+  <rdfs:subClassOf rdf:resource="#Context"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#Context"/>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="#blocks"/>
+          <owl:allValuesFrom rdf:resource="#FamilyFriendlyContentBlocked"/>
+        </owl:Restriction>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Content suitable for children. Excludes all words except those with multiple meanings, at least one of witch is strictly non-toxic (individuals from the  "NonToxicLanguage" classes).</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#Forum">
+  <rdfs:subClassOf rdf:resource="#Context"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#Context"/>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="#blocks"/>
+          <owl:allValuesFrom rdf:resource="#ForumContentBlocked"/>
+        </owl:Restriction>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Internet content, typical for discussion forums. Excludes strictly toxic words and phrases (representatives of the "ToxicLanguage" class only), but allows those with other meaninig.</rdfs:comment>
+</owl:Class>
+
+<owl:NamedIndividual rdf:about="#акам">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">акам</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#акаме">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">акаме</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#акат">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">акат</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#акате">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">акате</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#акото">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">акото</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#анилингус">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">анилингус</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#анилингуси">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">анилингуси</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#бозки">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">бозки</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#бозките">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">бозките</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#букаке">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">букаке</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#букакета">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">букакета</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#букакетата">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">букакетата</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#вагина">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#MedicalTerminology"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">вагина</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#вагината">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#MedicalTerminology"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">вагината</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#вагини">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#MedicalTerminology"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">вагини</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#вагините">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#MedicalTerminology"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">вагините</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#втф">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">втф</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#глупак">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">глупак</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#глупаци">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">глупаци</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#глупости">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">глупости</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#гноемъд">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">гноемъд</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#говна">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">говна</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#гъз">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">гъз</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#гъза">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">гъза</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#гъзобар">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">гъзобар</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#гъзоблиз">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">гъзоблиз</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#гъзобрък">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">гъзобрък</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#гъзове">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">гъзове</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#гъзовете">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">гъзовете</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#гърди">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#MedicalTerminology"/>
+  <rdf:type rdf:resource="#NonToxicLanguage"/>
+  <rdf:type rdf:resource="#Ambiguous"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">гърди</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#гърдите">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#MedicalTerminology"/>
+  <rdf:type rdf:resource="#NonToxicLanguage"/>
+  <rdf:type rdf:resource="#Ambiguous"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">гърдите</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#деба">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">деба</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#дееба">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">дееба</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#дупара">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">дупара</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#дупарата">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">дупарата</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#дупари">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">дупари</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#дупарите">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">дупарите</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#дупе">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">дупе</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#дупета">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">дупета</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#дупетата">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">дупетата</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#еба">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">еба</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ебан">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ебан</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ебана">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ебана</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ебане">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ебане</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ебано">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ебано</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ебаняк">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ебаняк</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ебаси">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ебаси</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ебат">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ебат</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ебач">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ебач</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ебача">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ебача</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ебачи">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ебачи</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ебачите">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ебачите</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ебачът">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ебачът</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ебем">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ебем</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#еби">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">еби</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ебльо">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ебльо</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#еякулации">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#MedicalTerminology"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">еякулации</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#еякулация">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#MedicalTerminology"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">еякулация</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#еякулирам">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#MedicalTerminology"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">еякулирам</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#еякулират">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#MedicalTerminology"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">еякулират</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#еякулирате">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#MedicalTerminology"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">еякулирате</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#жмуд">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">жмуд</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#жмуди">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">жмуди</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#жълтур">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">жълтур</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#жълтури">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">жълтури</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#жълтурковци">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">жълтурковци</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#задник">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">задник</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#задници">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">задници</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#задниците">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">задниците</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#идиот">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">идиот</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#идиота">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">идиота</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#идиоти">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">идиоти</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#идиотите">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">идиотите</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#изпразване">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#MedicalTerminology"/>
+  <rdf:type rdf:resource="#NonToxicLanguage"/>
+  <rdf:type rdf:resource="#Ambiguous"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">изпразване</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#изпразването">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#MedicalTerminology"/>
+  <rdf:type rdf:resource="#NonToxicLanguage"/>
+  <rdf:type rdf:resource="#Ambiguous"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">изпразването</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#изсера">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">изсера</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#изсирам">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">изсирам</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#изсра">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">изсра</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#изсрал">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">изсрал</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#каламбаци">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">каламбаци</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#кендза">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">кендза</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#кендзал">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">кендзал</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#кендзалник">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">кендзалник</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#кендзам">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">кендзам</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#кенефоводолаз">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">кенефоводолаз</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#кенза">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">кенза</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#кензал">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">кензал</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#кензам">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">кензам</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#клеца">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">клеца</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#клецам">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">клецам</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#клецат">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">клецат</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#копеле">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">копеле</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#копелета">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">копелета</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#копелетата">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">копелетата</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#копелето">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">копелето</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#кретен">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">кретен</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#кур">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">кур</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#кура">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">кура</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#курва">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">курва</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#курвата">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">курвата</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#курви">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">курви</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#курвите">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">курвите</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#курволяк">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">курволяк</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#курволяка">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">курволяка</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#курволякът">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">курволякът</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#курволяци">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">курволяци</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#курволяците">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">курволяците</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#кучка">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#NonToxicLanguage"/>
+  <rdf:type rdf:resource="#Ambiguous"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">кучка</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#кучката">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#NonToxicLanguage"/>
+  <rdf:type rdf:resource="#Ambiguous"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">кучката</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#кучки">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#NonToxicLanguage"/>
+  <rdf:type rdf:resource="#Ambiguous"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">кучки</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#кучките">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#NonToxicLanguage"/>
+  <rdf:type rdf:resource="#Ambiguous"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">кучките</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#кюнец">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#NonToxicLanguage"/>
+  <rdf:type rdf:resource="#Ambiguous"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">кюнец</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#кюнци">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#NonToxicLanguage"/>
+  <rdf:type rdf:resource="#Ambiguous"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">кюнци</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#лайна">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">лайна</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#лайнар">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">лайнар</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#лайнарка">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">лайнарка</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#лайната">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">лайната</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#лайненце">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">лайненце</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#лайно">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">лайно</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#лайното">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">лайното</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#лесбос">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#NonToxicLanguage"/>
+  <rdf:type rdf:resource="#Ambiguous"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">лесбос</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#лесбоси">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">лесбоси</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#лесбосите">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">лесбосите</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#майна">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">майна</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#манаф">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">манаф</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#манафи">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">манафи</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#манафите">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">манафите</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#мангал">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#NonToxicLanguage"/>
+  <rdf:type rdf:resource="#Ambiguous"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">мангал</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#мастурбатор">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#MedicalTerminology"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">мастурбатор</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#мастурбация">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#MedicalTerminology"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">мастурбация</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#мастурбацията">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#MedicalTerminology"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">мастурбацията</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#мастурбирам">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#MedicalTerminology"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">мастурбирам</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#мастурбираме">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#MedicalTerminology"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">мастурбираме</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#мастурбират">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#MedicalTerminology"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">мастурбират</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#милф">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">милф</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#минджа">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">минджа</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#минджата">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">минджата</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#минет">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">минет</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#мкбч">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">мкбч</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#мъде">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">мъде</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#мъдо">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">мъдо</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#наебан">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">наебан</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#наебана">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">наебана</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#наебаната">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">наебаната</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#наебани">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">наебани</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#наебаните">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">наебаните</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#наебания">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">наебания</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#наебаният">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">наебаният</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#наци">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#MinorityGroup"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">наци</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#нацита">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#MinorityGroup"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">нацита</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#нацитата">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#MinorityGroup"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">нацитата</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#нацито">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#MinorityGroup"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">нацито</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#негодник">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">негодник</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#негодници">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">негодници</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#негри">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#MinorityGroup"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">негри</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#негро">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#MinorityGroup"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">негро</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#негър">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#MinorityGroup"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">негър</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#олигофрен">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">олигофрен</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#онодя">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">онодя</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#онождам">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">онождам</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#оргия">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">оргия</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#панис">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">панис</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#паниса">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">паниса</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#паниси">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">паниси</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#панисите">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">панисите</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#педал">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#NonToxicLanguage"/>
+  <rdf:type rdf:resource="#Ambiguous"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">педал</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#педали">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#NonToxicLanguage"/>
+  <rdf:type rdf:resource="#Ambiguous"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">педали</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#педераз">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">педераз</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#педерас">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">педерас</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#педераси">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">педераси</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#педераст">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#MinorityGroup"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">педераст</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#педерасти">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#MinorityGroup"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">педерасти</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#педи">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">педи</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#педофил">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">педофил</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#педофила">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">педофила</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#педофили">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">педофили</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#педофилите">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">педофилите</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#педофилът">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">педофилът</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#пендюха">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">пендюха</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#пенис">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#MedicalTerminology"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">пенис</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#пениса">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#MedicalTerminology"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">пениса</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#пениси">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#MedicalTerminology"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">пениси</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#пенисите">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#MedicalTerminology"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">пенисите</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#печка">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#NonToxicLanguage"/>
+  <rdf:type rdf:resource="#Ambiguous"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">печка</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#пичка">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">пичка</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#порно">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">порно</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#порното">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">порното</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#проклетник">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">проклетник</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#проклетници">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">проклетници</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#проклетниците">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">проклетниците</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#проститутка">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">проститутка</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#проститутката">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">проститутката</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#проститутки">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">проститутки</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#проститутките">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">проститутките</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#простотии">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">простотии</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#пръдляч">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">пръдляч</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#пръдна">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">пръдна</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#пръднеш">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">пръднеш</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#пръдни">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">пръдни</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#пръдните">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">пръдните</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#пръдня">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">пръдня</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#пръднята">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">пръднята</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#пуси">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">пуси</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#путе">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">путе</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#путенце">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">путенце</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#путенцето">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">путенцето</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#путето">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">путето</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#путка">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">путка</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#путката">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">путката</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#путки">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">путки</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#путките">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">путките</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#путчица">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">путчица</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#путчицата">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">путчицата</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#путчици">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">путчици</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#путчиците">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">путчиците</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#пърдя">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">пърдя</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#свирка">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#NonToxicLanguage"/>
+  <rdf:type rdf:resource="#Ambiguous"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">свирка</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#свирки">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#NonToxicLanguage"/>
+  <rdf:type rdf:resource="#Ambiguous"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">свирки</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#свирките">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#NonToxicLanguage"/>
+  <rdf:type rdf:resource="#Ambiguous"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">свирките</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#седалище">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#MedicalTerminology"/>
+  <rdf:type rdf:resource="#NonToxicLanguage"/>
+  <rdf:type rdf:resource="#Ambiguous"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">седалище</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#седалището">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#MedicalTerminology"/>
+  <rdf:type rdf:resource="#NonToxicLanguage"/>
+  <rdf:type rdf:resource="#Ambiguous"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">седалището</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#секс">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#MedicalTerminology"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">секс</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#селтак">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">селтак</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#сельо">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">сельо</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#сера">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">сера</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#серам">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">серам</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#слабоумен">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">слабоумен</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#слабоумна">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">слабоумна</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#слабоумната">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">слабоумната</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#слабоумни">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">слабоумни</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#слабоумните">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">слабоумните</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#слабоумния">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">слабоумния</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#слабоумният">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">слабоумният</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#содомизиран">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">содомизиран</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#содомия">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#MedicalTerminology"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">содомия</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#сперма">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#MedicalTerminology"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">сперма</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#спермата">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#MedicalTerminology"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">спермата</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#сперми">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#MedicalTerminology"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">сперми</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#спермите">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#MedicalTerminology"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">спермите</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#срал">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">срал</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ташак">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ташак</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ташаци">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ташаци</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#труженичка">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#NonToxicLanguage"/>
+  <rdf:type rdf:resource="#Ambiguous"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">труженичка</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#труженичката">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#NonToxicLanguage"/>
+  <rdf:type rdf:resource="#Ambiguous"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">труженичката</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#труженички">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#NonToxicLanguage"/>
+  <rdf:type rdf:resource="#Ambiguous"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">труженички</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#труженичките">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#NonToxicLanguage"/>
+  <rdf:type rdf:resource="#Ambiguous"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">труженичките</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#тънкохуй">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">тънкохуй</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#тъпак">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">тъпак</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#тъпанар">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">тъпанар</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#тъпанари">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">тъпанари</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#уруспии">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">уруспии</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#уруспиите">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">уруспиите</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#уруспия">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">уруспия</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#уруспията">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">уруспията</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#хомо">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#MedicalTerminology"/>
+  <rdf:type rdf:resource="#MinorityGroup"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">хомо</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#хуй">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">хуй</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#хуя">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">хуя</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#цица">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">цица</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#цицата">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">цицата</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#цици">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">цици</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#циците">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">циците</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#цомбари">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">цомбари</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#цомби">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">цомби</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#цомбите">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">цомбите</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#чалми">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#MinorityGroup"/>
+  <rdf:type rdf:resource="#NonToxicLanguage"/>
+  <rdf:type rdf:resource="#Ambiguous"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">чалми</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#чалмите">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#MinorityGroup"/>
+  <rdf:type rdf:resource="#NonToxicLanguage"/>
+  <rdf:type rdf:resource="#Ambiguous"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">чалмите</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#чекиджии">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">чекиджии</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#чекиджиите">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">чекиджиите</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#чекиджия">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">чекиджия</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#чекиджията">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">чекиджията</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#чекии">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">чекии</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#чекиите">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">чекиите</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#чекия">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">чекия</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#чекията">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">чекията</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#чернилка">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#NonToxicLanguage"/>
+  <rdf:type rdf:resource="#Ambiguous"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">чернилка</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#чернилката">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#NonToxicLanguage"/>
+  <rdf:type rdf:resource="#Ambiguous"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">чернилката</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#чернилки">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#NonToxicLanguage"/>
+  <rdf:type rdf:resource="#Ambiguous"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">чернилки</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#чернилките">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#NonToxicLanguage"/>
+  <rdf:type rdf:resource="#Ambiguous"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">чернилките</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#чикиджия">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">чикиджия</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#чикия">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">чикия</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#чифут">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">чифут</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#чифута">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">чифута</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#чифути">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">чифути</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#чифутите">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">чифутите</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#чукам">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#NonToxicLanguage"/>
+  <rdf:type rdf:resource="#Ambiguous"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">чукам</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#чукат">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#NonToxicLanguage"/>
+  <rdf:type rdf:resource="#Ambiguous"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">чукат</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#шафрантии">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">шафрантии</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#шафрантиите">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">шафрантиите</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#шафрантия">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">шафрантия</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#шафрантията">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">шафрантията</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#шибан">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">шибан</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#шибани">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">шибани</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#шибаните">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">шибаните</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#шибания">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">шибания</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#шибаният">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">шибаният</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#шибано">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">шибано</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#шибаното">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">шибаното</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#шунда">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">шунда</modi:text>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#шундата">
+  <rdf:type rdf:resource="#Content"/>
+  <rdf:type rdf:resource="#ToxicLanguage"/>
+  <rdf:type rdf:resource="#FamilyFriendlyContentBlocked"/>
+  <rdf:type rdf:resource="#ForumContentBlocked"/>
+  <modi:text rdf:datatype="http://www.w3.org/2001/XMLSchema#string">шундата</modi:text>
+</owl:NamedIndividual>
+
+
+</rdf:RDF>
